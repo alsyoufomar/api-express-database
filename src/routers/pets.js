@@ -4,14 +4,18 @@ const db = require('../utils/database')
 
 petsRouter.get('/', (req, res) => {
 
-  const dbData = 'SELECT * FROM pets'
+  console.log('limit', req.query.limit)
+  console.log('offset', req.query.offset)
+
+  let limit = req.query.limit === undefined ? 20 : req.query.limit
+  let offset = req.query.offset === undefined ? null : req.query.offset
+
+  const dbData = `SELECT * FROM pets LIMIT ${limit} OFFSET ${offset}`
   db.query(dbData)
     .then(dbres => {
-      console.log(dbres)
       res.json({ data: dbres.rows })
     })
     .catch(err => {
-      console.log(err)
       res.status(404)
       res.json({ error: 'unexpected Error' })
     })
@@ -22,7 +26,6 @@ petsRouter.get('/:id', (req, res) => {
   const queryValues = [req.params.id]
   db.query(dbData, queryValues)
     .then(dbResult => {
-      console.log(dbResult)
       if (dbResult.rowCount === 0) {
         res.status(500)
         res.json({ error: 'unexpected' })
@@ -31,7 +34,6 @@ petsRouter.get('/:id', (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err)
       res.status(500)
       res.json({ error: 'unexpected error' })
     })
@@ -47,11 +49,9 @@ RETURNING *`
 
   db.query(dbData, queryValues)
     .then(dbResult => {
-      console.log(dbResult)
       res.json({ pet: dbResult.rows[0] })
     })
     .catch(err => {
-      console.log('catched', err)
       res.status(404)
       res.json({ error: 'unexpected error' })
     })
