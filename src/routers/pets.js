@@ -1,7 +1,8 @@
-const { getPets, getSinglePet, addPet, replacePet, removePet, updatePet } = require('../controllers/petsController')
+const { getPets, getSinglePet, addPet, replacePet, removePet, updatePet, getCol } = require('../controllers/petsController')
 const express = require('express');
 const petsRouter = express.Router()
 
+petsRouter.get('/breeds', getCol)
 petsRouter.get('/', getPets)
 petsRouter.get('/:id', getSinglePet)
 petsRouter.post('/', addPet)
