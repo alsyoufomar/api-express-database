@@ -4,13 +4,12 @@ const db = require('../utils/database')
 
 petsRouter.get('/', (req, res) => {
 
-  console.log('limit', req.query.limit)
-  console.log('offset', req.query.offset)
+  const per_page = req.query.per_page === undefined ? 20 :
+    req.query.per_page < 10 ? req.query.per_page = 10 : req.query.per_page
+  const page = req.query.page === undefined ? 1 :
+    req.query.page < 1 ? req.query.page = 0 : (req.query.page - 1) * per_page
 
-  let limit = req.query.limit === undefined ? 20 : req.query.limit
-  let offset = req.query.offset === undefined ? null : req.query.offset
-
-  const dbData = `SELECT * FROM pets LIMIT ${limit} OFFSET ${offset}`
+  const dbData = `SELECT * FROM pets LIMIT ${per_page} OFFSET ${page}`
   db.query(dbData)
     .then(dbres => {
       res.json({ data: dbres.rows })
