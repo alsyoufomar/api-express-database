@@ -15,7 +15,7 @@ function getPets (req, res) {
     })
     .catch(err => {
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -26,14 +26,14 @@ function getSinglePet (req, res) {
     .then(dbResult => {
       if (dbResult.rowCount === 0) {
         res.status(500)
-        res.json({ error: 'unexpected' })
+        res.json({ error: 'Invalid Query' })
       } else {
         res.json({ pet: dbResult.rows[0] })
       }
     })
     .catch(err => {
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -75,7 +75,7 @@ function addPet (req, res) {
     })
     .catch(err => {
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -107,9 +107,8 @@ function replacePet (req, res) {
       res.json({ updatedPet: dbResult.rows[0] })
     })
     .catch(err => {
-      console.log(err.message)
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -121,9 +120,8 @@ function removePet (req, res) {
       res.json({ deletedPet: dbresult.rows[0] })
     })
     .catch(err => {
-      console.log(err)
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -162,9 +160,8 @@ function updatePet (req, res) {
       res.json({ deletedPet: dbresult.rows[0] })
     })
     .catch(err => {
-      console.log(err)
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
@@ -178,9 +175,8 @@ function getCol (req, res) {
       res.json({ breeds: dbresult.rows })
     })
     .catch(err => {
-      console.log(err)
       res.status(500)
-      res.json({ error: 'Unexpected Error (server error)' })
+      res.json({ error: err.message })
     })
 }
 
