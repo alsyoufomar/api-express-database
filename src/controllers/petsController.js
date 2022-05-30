@@ -54,7 +54,7 @@ function addPet (req, res) {
   The value is validated against the defined schema,
   this validate method will return an object that has 2 props (error & value)
   only one of these can have a value and the other one will be undefined,
-  in case we got an error the value prop will be undefined, otherwise value prop will be undefined.
+  in case we got an error the value prop will be undefined, otherwise error prop will be undefined.
   */
   const { error, value } = schema.validate(req.body)
   if (error) {
